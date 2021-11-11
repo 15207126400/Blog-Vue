@@ -1,0 +1,130 @@
+/* 页面横向居中布局纵向居中显示  */
+.app-row-center-layout{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+/* 页面纵向居中布局横向居中显示  */
+.app-column-center-layout{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* 页面横向两端对其布局纵向居中显示  */
+.app-row-between-layout{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* 页面纵向两端对其布局横向居中显示  */
+.app-column-between-layout{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* 页面横向子元素距离相等布局纵向居中显示  */
+.app-row-around-layout{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+/* 页面纵向子元素距离相等布局横向居中显示  */
+.app-column-around-layout{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+/* 页面主轴横向靠左布局 ,副轴纵向居中显示  */
+.app-row-start-layout{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+/* 页面主轴纵向靠左布局 ,副轴横向居中显示  */
+.app-column-start-layout{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+/* 页面垂直排列都自然居左  */
+.app-column-start-left{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+/* 页面垂直排列居下 */
+.app-column-start-end{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+/* 页面水平排列都自然居左  */
+.app-row-start-left{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+/* 页面水平反向排列都自然居右  */
+.app-row-end-right{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+/* 背景图全部填充显示  */
+.app-backgroud-layout{
+    background-size: cover;
+}
+
+/* 文本溢出省略 */
+.text-omit{
+    /* 超出一行文字自动隐藏 */
+    overflow:hidden;
+    /* 文字隐藏后添加省略号 */
+    text-overflow:ellipsis;
+    /* 不换行 */
+    white-space:nowrap;
+}
+
+/* 文本溢出省略(第二行) */
+.text-two-line-omit{
+    overflow:hidden;
+    text-overflow: ellipsis;
+    display:-webkit-box;
+    -webkit-line-clamp:2;
+    -webkit-box-orient:vertical;
+}
+
+/* 上间隔 */
+.top-gap{
+    margin-top: 20px;
+}
+.left-gap{
+    margin-left: 20px;
+}
+.bottom-gap{
+    margin-bottom: 20px;
+}
+.right-gap{
+    margin-right: 20px;
+}
