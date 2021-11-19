@@ -418,18 +418,14 @@
   }
   /* 底部 */
   .bottom-box{
+    position: fixed;
+    bottom: 0px;
     margin-top: 20px;
     background:#282828;
-    height:100px;
+    height:10%;
     width:100%;
     color:#828282;
     font-size:12px;
-  }
-  .bottom-title{
-    margin:10px 0px 10px 100px;
-  }
-  .bottom-Record{
-    margin: 0px 0px 0px 150px;
   }
   /* 文章提示 */
   .articleTips{
@@ -603,9 +599,11 @@
       background: #fff;
     }
     .bottom-box[data-v-10e356bb] {
+      position: fixed;
+      bottom: 0px;
       margin-top: 20px;
       background: #282828;
-      height: 80px;
+      height: 10%;
       width: 100%;
       color: #828282;
       font-size: 12px;
@@ -613,12 +611,6 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-    }
-    .bottom-title{
-      margin:10px 0px 10px 10px;
-    }
-    .bottom-Record{
-      margin: 0px 0px 20px 130px;
     }
     /* 文章提示 */
     .articleTips{

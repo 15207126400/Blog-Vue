@@ -121,7 +121,7 @@
                   <el-input style="font-family:'微软雅黑';" type="textarea" :rows="3" :placeholder="'回复: ' + comment.name" v-model="replyContent"> </el-input>
                 </div>
                 <div class="top-gap app-row-end-right">
-                  <el-button @click="reply(comment.id)" type="primary">发表评论</el-button>
+                  <el-button @click="reply(comment.id)" type="primary" size="mini">发表评论</el-button>
                 </div>
               </div>
             </div>
@@ -141,10 +141,10 @@
             <span class="base-title">发表评论:</span>
             <form id="submitForm">
               <div class="top-gap app-column-center-layout">
-                <el-input style="font-family:微软雅黑;" type="textarea" :rows="4" placeholder="说点什么吧..." v-model="content"> </el-input>
+                <el-input style="font-family:微软雅黑;" type="textarea" :rows="4" placeholder="请留下你的神评妙语..." v-model="content"> </el-input>
               </div>
               <div class="top-gap app-row-end-right">
-                <el-button @click="send()" type="primary">发表评论</el-button>
+                <el-button @click="send()" type="primary" size="mini">发表评论</el-button>
               </div>
             </form>
           </div>
@@ -170,7 +170,6 @@
 </template>
 
 <script>
-//import { qq } from 'http://qzonestyle.gtimg.cn/qzone/app/qzlike/qzopensl.js#jsdate=20111201'
 import { getArticle,getListByRand } from '../api/blog/article.js'
 import { getCategoryList } from '../api/blog/category.js'
 import { postComment,replyComment,getCommentList,getCommentListPage } from '../api/blog/comment.js'
@@ -310,7 +309,7 @@ export default {
       const userinfo = localStorage.getItem('userinfo')
       if(userinfo){
         var user = JSON.parse(userinfo)
-        if(user.name != "" && this.content != ""){
+        if(user.nickname != "" && this.content != ""){
           const loading = this.$loading({
             lock: true,
             text: 'Loading',
@@ -320,9 +319,9 @@ export default {
           console.log(user.avatar_url)
 
           var form = {
-            name: user.name,
+            name: user.nickname,
             email: user.email,
-            avatarUrl: user.avatar_url,
+            avatarUrl: user.avatar,
             content: this.content,
             articleId: this.$route.params.id,
             parentId: 0
@@ -340,7 +339,7 @@ export default {
             },1500);
           })
         } else if(this.content == ""){
-          this.$message.error('说点什么吧!')
+          this.$message.error('请留下你的神评妙语!')
         }
       } else {
         this.$message.error('请登录!')
@@ -357,7 +356,7 @@ export default {
       const userinfo = localStorage.getItem('userinfo')
       if(userinfo){
         var user = JSON.parse(userinfo)
-        if(user.name != "" && this.replyContent != ""){
+        if(user.nickname != "" && this.replyContent != ""){
           const loading = this.$loading({
             lock: true,
             text: 'Loading',
@@ -366,9 +365,9 @@ export default {
           });
 
           var form = {
-            name: user.name,
+            name: user.nickname,
             email: user.email,
-            avatarUrl: user.avatar_url,
+            avatarUrl: user.avatar,
             content: this.replyContent,
             articleId: this.$route.params.id,
             parentId: id
@@ -387,7 +386,7 @@ export default {
             },1500);
           })
         } else if(this.replyContent == ""){
-          this.$message.error('说点什么吧!')
+          this.$message.error('请留下你的神评妙语!')
         }
       } else {
         this.$message.error('请登录!')
@@ -584,14 +583,6 @@ export default {
   .center-left-item-box >>> ol ol, ul ol {
       list-style-type: lower-roman;
   }
-
-  /* .center-left-item-box >>> pre {
-      max-width: 800px;
-      white-space: pre-wrap;
-      line-height: 1.7em;
-      overflow: auto;
-      padding: 6px 10px;
-  } */
   
   .center-left-item-box >>> code {
       font-family: Consolas, Monaco, Andale Mono, monospace;
@@ -634,8 +625,6 @@ export default {
   .center-left-item-box >>> code {
       color: #666555;
   }
-
-
   .center-left-item-box >>> aside {
       display: block;
       float: right;
@@ -688,8 +677,6 @@ export default {
   .center-left-item-box >>> dd {
       margin-left: 0;
   }
-
-  /* Code below this line is copyright Twitter Inc. */
 
   .center-left-item-box >>> button,
   input,

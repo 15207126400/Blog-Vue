@@ -41,28 +41,209 @@
                   <li>友链</li>
                 </div>
               </router-link>
-              <div v-if="flag==1" @click="loginOut()" style="margin-top:200px;cursor:pointer" class="app-column-center-layout">
-                <li><img style="width:35px;border-radius:50%;" :src="userinfo.avatar_url" /></li>
-                <li style="font-size:12px;color:#15800E;margin-top:10px;font-weight:bold;">用户: {{userinfo.name}}</li>
+              <div v-if="flag==1" style="margin-top:150px;cursor:pointer">
+                <!--兼容默认头像-->
+                <div @click="dialogForUserinfo = true" class="app-column-center-layout">
+                  <li>
+                    <img style="width:40px;height:40px;border-radius:50%;" :src="userinfo.avatar" />
+                  </li>
+                  <li style="font-size:12px;color:#15800E;margin-top:10px;font-weight:bold;">用户: {{userinfo.nickname}}</li>
+                </div>
+                
+                <!--注销-->
+                <div class="app-column-center-layout">
+                  <el-button @click="loginOut()" style="margin-top:10px;height:25px;" type="primary" size="mini">注销</el-button>
+                </div>
               </div>
-              <div v-else @click="login()" style="margin-top:200px;cursor:pointer" class="app-column-center-layout">
-                <li><img style="width:35px;border-radius:50%;" src="../../assets/github.jpg" /></li>
-                <li style="font-size:12px;color:#999999;margin-top:10px;">github登录</li>
+
+              <!--登录弹窗-->
+              <div v-else style="margin-top:150px;cursor:pointer" class="app-column-center-layout">
+                <el-button type="text" @click="dialogForLogin = true">
+                  <li style="display:inline-block;width:40px;height:40px;border-radius:50%;background:#C0C4CC;line-height:40px;color:#fff;">空</li>
+                  <li style="font-size:12px;color:#C0C4CC;margin-top:10px;">未登录</li>
+                </el-button>
               </div>
             </div>
           </ul>
       </el-drawer>
+
+      <!--登录窗口-->
+      <el-dialog style="box-shadow:0 2px 12px 0 rgba(62, 63, 63, 0.3)" 
+        title="" 
+        width="350px" 
+        :visible.sync="dialogForLogin"
+        :open="getUserinfo"
+        center>
+        <div class="app-column-center-layout">
+          <div class="app-column-center-layout">
+            <span class="base-title">博客登录</span>
+          </div>
+          <div style="margin-top:30px;width:250px;" class="app-row-between-layout">
+            <el-input style="margin:10px" prefix-icon="el-icon-user-solid" placeholder="请输入邮箱" v-model="username" size="medium" clearable />
+          </div>
+          <div style="width:250px;" class="app-row-between-layout">
+            <el-input style="margin:10px;" prefix-icon="el-icon-s-claim" placeholder="请输入密码" v-model="password" size="medium" show-password />
+          </div>
+          <div class="app-row-end-right">
+              <el-button @click="dialogForUserinfo = true" style="padding-left:150px;" type="text" size="mini">快速注册</el-button>
+          </div>
+          <el-button @click="loginForUsername(username, password)" style="margin:10px;width:150px;" type="primary" size="small">登录</el-button>
+          </div>
+          <el-divider></el-divider>
+          <div @click="login()" style="margin-top:20px;cursor:pointer" class="app-column-center-layout">
+            <img style="width:40px;height:40px;border-radius:50%;" src="../../assets/github.jpg" />
+            <span style="font-size:12px;color:#C0C4CC;margin-top:10px;">Github登录</span>
+          </div>
+      </el-dialog>
+
+      <!--用户信息窗口-->
+      <el-dialog style="box-shadow:0 2px 12px 0 rgba(62, 63, 63, 0.3)" title="" width="350px" :visible.sync="dialogForUserinfo">
+        <div class="app-column-center-layout">
+          <!--头像-->
+          <div style="width:100%;height:150px;background:#58A9FF;" class="app-column-center-layout">
+            <div class="app-column-center-layout">
+              <div class="app-column-center-layout">
+                <el-upload
+                  class="avatar-uploader"
+                  action="/api/blog/uploadAvatar"
+                  :on-success="uploadSuccess"
+                  :before-upload="beforeUpload"
+                  :show-file-list="false"
+                  accept=".jpg,.jpeg,.png"
+                >
+                  <img
+                    v-if="avatar"
+                    :src="avatar"
+                    style="width: 100px; height: 100px; border-radius: 50%; border: 5px solid #BCBFC2;"
+                    class="avatar"
+                  />
+                  <img
+                    v-else
+                    style="width: 100px; height: 100px; border-radius: 50%; border: 5px solid #BCBFC2;"
+                    src="http://1.117.251.254:9000/system/default_avatar.png"
+                  />
+                </el-upload>
+              </div>
+            </div>
+          </div>
+          <!--邮箱-->
+          <div
+            style="
+              display: -webkit-box;
+              -webkit-box-align: center;
+              margin-top: 20px;
+            "
+          >
+            <div class="app-row-between-layout">
+              <div class="app-row-end-right">
+                <label style="color: #f56c6c; margin-right: 5px">*</label>
+                <label>邮箱：</label>
+              </div>
+              <el-input v-if="userid"
+                style="width: 220px"
+                v-model="username"
+                @blur="changeEmail(username)"
+                :disabled="true"
+                size="medium"
+                clearable
+              />
+              <el-input v-else
+                style="width: 220px"
+                placeholder="请输入邮箱"
+                v-model="username"
+                @blur="changeEmail(username)"
+                size="medium"
+                clearable
+              />
+            </div>
+          </div>
+          <div style="height: 20px; width: 165px" class="app-row-start-layout">
+            <span
+              v-show="emailFlag == true"
+              style="color: #d23a32; font-size: 12px"
+              >{{ emailMessage }}</span
+            >
+          </div>
+          <!--密码-->
+          <div style="display: -webkit-box; -webkit-box-align: center">
+            <div class="app-row-end-right">
+              <label style="color: #f56c6c; margin-right: 5px">*</label>
+              <label>密码：</label>
+            </div>
+            <el-input
+              style="width: 220px"
+              maxlength="20"
+              placeholder="请输入密码"
+              v-model="password"
+              @blur="changePassword(password)"
+              size="medium"
+              show-password
+            />
+          </div>
+          <div style="height: 20px; width: 165px" class="app-row-start-layout">
+            <span
+              v-show="passwordFlag == true"
+              style="color: #d23a32; font-size: 12px"
+              >{{ passwordMessage }}</span
+            >
+          </div>
+          <!--昵称-->
+          <div style="display: -webkit-box; -webkit-box-align: center">
+            <div class="app-row-end-right">
+              <label style="color: #f56c6c; margin-right: 5px">*</label>
+              <label>昵称：</label>
+            </div>
+            <el-input
+              style="width: 220px"
+              maxlength="20"
+              placeholder="请输入昵称"
+              v-model="nickname"
+              @blur="changeNickname(nickname)"
+              size="medium"
+              clearable
+            />
+          </div>
+          <div style="height: 20px; width: 165px" class="app-row-start-layout">
+            <span
+              v-show="nicknameFlag == true"
+              style="color: #d23a32; font-size: 12px"
+              >{{ nicknameMessage }}</span
+            >
+          </div>
+          <el-button
+            @click.native="registerOrUpdateAccount(username, password, nickname)"
+            style="margin: 35px 10px 10px 10px; width: 200px; position: relative"
+            type="primary"
+            size="small"
+            >提交</el-button
+          >
+        </div>
+      </el-dialog>
     </div>
 </template>
 
 
 <script>
-
+  import { loginForUsername, registerOrUpdateAccount } from '../../api/login/login.js'
   export default {
     data() {
       return {
-        drawer: false,
+        dialogForLogin: false,
+        dialogForUserinfo: false,
         userinfo: {},
+        userid: '',
+        username: '',
+        password: '',
+        nickname: "",
+        avatar: "",
+        disabled: false,
+        emailMessage: "",
+        emailFlag: false,
+        passwordMessage: "",
+        passwordFlag: false,
+        nicknameMessage: "",
+        nicknameFlag: false,
+        drawer: false,
         flag: 0
       };
     },
@@ -72,18 +253,24 @@
     },
 
     created(){
-      console.log("userinfo: " + localStorage.getItem("userinfo"))
-      var userinfo = localStorage.getItem("userinfo")
-      if(userinfo && userinfo != null){
-        this.userinfo = JSON.parse(userinfo)
+      var userinfoCache = localStorage.getItem("userinfo")
+      var userinfo = JSON.parse(userinfoCache)
+      if(userinfo != null){
+        this.userinfo = userinfo
+        this.userid = userinfo.id
+        this.username = userinfo.username
+        this.password = userinfo.password
+        this.avatar = userinfo.avatar
+        this.nickname = userinfo.nickname
         this.flag = 1
       } else {
         this.userinfo = {}
         this.flag = 0
       }
     },
+
     methods: {
-      //登录
+      //Github登录
       login(){
         //保存当前页面路由
         localStorage.setItem("currentRoute",this.$route.path)
@@ -91,6 +278,43 @@
         const url = 'http://www.github.com/login/oauth/authorize?client_id=6f44473f8efbb96f16fc&redirect_uri=http://blog.ivan.group/loginCallback'
         //路径跳转
         window.location.href = url
+      },
+
+      //账密登录
+      loginForUsername(username, password){
+          //关闭弹出层
+          this.dialogForLogin = false
+          //数据组装
+          var form = {
+            username: username,
+            password: password
+          }
+        loginForUsername(form).then((res) => {
+          if(res.code == 0){
+            this.$message({
+              type: 'success',
+              center: true,
+              message: '登录成功!'
+            });
+            //缓存用户信息
+            var userinfo = res.data
+            localStorage.setItem('userinfo',JSON.stringify(userinfo))
+            this.userinfo = userinfo
+            this.username = userinfo.username
+            this.password = userinfo.password
+            this.avatar = userinfo.avatar
+            this.nickname = userinfo.nickname
+            clearTimeout(this.timer);         //清除延迟执行
+            this.timer = setTimeout(()=>{     //设置延迟执行
+              location.reload()
+            },500);
+          } else {
+            this.$message.error({
+              center: true,
+              message: res.msg
+            });
+          }
+        })
       },
 
       //登出
@@ -106,15 +330,18 @@
           cancelButtonText: '取消',
           beforeClose: (action, instance, done) => {
             if (action === 'confirm') {
-              console.log('退出')
+              console.log('注销账号')
               localStorage.removeItem("userinfo")
               instance.confirmButtonLoading = true;
               instance.confirmButtonText = '正在注销...';
               setTimeout(() => {
                 done();
                 setTimeout(() => {
-                  instance.confirmButtonLoading = false;
+                  //跳转首页
+                  this.$router.push('/articleList');
+                  //刷新页面
                   location.reload()
+                  instance.confirmButtonLoading = false;
                 }, 1000);
               }, 1500);
             } else {
@@ -125,9 +352,118 @@
           this.$message({
             type: 'success',
             center: true,
-            message: this.userinfo.name + ', 退出成功!'
+            message: this.userinfo.nickname + ', 注销成功!'
           });
         });
+      },
+
+      //上传前操作
+      beforeUpload(file) {
+        const isLt1M = file.size / 1024 / 1024 > 1;
+        if (isLt1M) {
+          this.$message.error({
+            center: true,
+            message: "图片不允许超过1M大小",
+          });
+        } 
+      },
+
+      //上传成功后操作
+      uploadSuccess(res) {
+        console.log("服务器返回值===" + res.data);
+        this.avatar = res.data;
+      },
+
+      //账号验证(邮箱格式)
+      changeEmail: function (username) {
+        var regEmail = /^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
+        if (username == "" || username == null) {
+          this.emailMessage = "邮箱必须填写哦";
+          this.emailFlag = true;
+        } else if (!regEmail.test(username)) {
+          this.emailMessage = "邮箱格式不符合规范";
+          this.emailFlag = true;
+        } else {
+          this.emailFlag = false;
+        }
+      },
+
+      //密码校验
+      changePassword: function (password) {
+        var num = 5;
+        if (password.length <= num) {
+          this.passwordMessage = "密码长度必须大于6位数";
+          this.passwordFlag = true;
+        } else {
+          this.passwordFlag = false;
+        }
+      },
+
+      //昵称校验
+      changeNickname: function (nickname) {
+        var regNickname = /[^\a-\z\A-\Z0-9\u4e00-\u9fe5_]/g;
+        if (nickname == "" || nickname == null) {
+          this.nicknameMessage = "昵称必须填写哦";
+          this.nicknameFlag = true;
+        } else if (regNickname.test(nickname)) {
+          this.nicknameMessage = "昵称不可以包含特殊字符";
+          this.nicknameFlag = true;
+        } else {
+          this.nicknameFlag = false;
+        }
+      },
+
+      //提交请求
+      registerOrUpdateAccount(username, password, nickname) {
+        //非空判断
+        if (username == "" || username == null) {
+          this.emailMessage = "邮箱必须填写哦";
+          this.emailFlag = true;
+        }
+        if (password == "" || password == null) {
+          this.passwordMessage = "密码长度必须大于6位数";
+          this.passwordFlag = true;
+        }
+        if (nickname == "" || nickname == null) {
+          this.nicknameMessage = "昵称必须填写哦";
+          this.nicknameFlag = true;
+        }
+
+        if (this.emailFlag == false && this.passwordFlag == false && this.nicknameFlag == false) {
+          var form = {
+            id: this.userid,
+            username: username,
+            password: password,
+            nickname: nickname,
+            avatar: this.avatar,
+          };
+          registerOrUpdateAccount(form).then((res) => {
+            var that = this;
+            if (res.code == 0) {
+              this.$message({
+                type: "success",
+                center: true,
+                message: "操作成功!",
+              });
+              //跳转回之前的路由路径
+              var path = localStorage.getItem("currentRoute");
+              //保存用户信息
+              var userinfo = res.data
+              localStorage.setItem("userinfo", JSON.stringify(userinfo));
+              that.$router.push(path);
+              clearTimeout(this.timer); //清除延迟执行
+              this.timer = setTimeout(() => {
+                //设置延迟执行
+                location.reload();
+              }, 500);
+            } else {
+              this.$message.error({
+                center: true,
+                message: res.msg,
+              });
+            }
+          });
+        }
       },
 
       //关闭菜单
@@ -153,11 +489,11 @@
   a hover
     text-decoration none
   .menu-btn
-    position absolute
-    right 20px
+    position fixed
+    right 0px
     top 20px
     z-index 30
-    padding 12px 15px 12px 15px
+    padding 6px 10px 6px 10px
     border 1px solid rgba(255,255,255,0.6)
     background #333333
     cursor pointer
@@ -187,11 +523,11 @@
   .menu-avg-box
     height 100px
   .menu-btn
-    position absolute
+    position fixed
     right 0px
     top 20px
     z-index 30
-    padding 12px 15px 12px 15px
+    padding 6px 10px 6px 10px
     border 1px solid rgba(255,255,255,0.6)
     background #333333
     cursor pointer

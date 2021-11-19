@@ -28,7 +28,7 @@
                 </div>
                 <div class="line"></div>
                 <div class="app-column-center-layout">
-                  <label class="about-data-label">{{statistical.commontCount}}</label>
+                  <label class="about-data-label">{{statistical.commentCount}}</label>
                   <span class="about-data-span">评论</span>
                 </div>
               </div>
@@ -103,7 +103,7 @@
               <el-timeline-item timestamp="2020/01/20" placement="top">
                 <el-card>
                   <h4>界面优化</h4>
-                  <p>博客UI细节优化</p>
+                  <p>增加动画特效及博客部分UI细节优化</p>
                 </el-card>
               </el-timeline-item>
               <el-timeline-item timestamp="2021/11/01" placement="top">
