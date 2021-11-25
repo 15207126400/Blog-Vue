@@ -72,7 +72,6 @@
         title="" 
         width="350px" 
         :visible.sync="dialogForLogin"
-        :open="getUserinfo"
         center>
         <div class="app-column-center-layout">
           <div class="app-column-center-layout">

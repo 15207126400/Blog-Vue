@@ -21,10 +21,14 @@ export function getArticle(form) {
         console.log(response)
     })
 }
-export function getArticleList() {
+export function getArticleList(form) {
     const url = '/api/blog/getArticleList'
+    const size = form.size
+    const current = form.current
 
-    return axios.get(url).then((res) => {
+    return axios.get(url, {params: {
+        size, current
+    }}).then((res) => {
         return Promise.resolve(res.data)
     }).catch(function(response) {
         console.log(response)
@@ -41,10 +45,12 @@ export function getListByRand() {
 }
 export function getArticleListByCategory(form) {
     const url = '/api/blog/getArticleListByCategory'
-    const categoryId = form
+    const categoryId = form.categoryId
+    const size = form.size
+    const current = form.current 
 
     return axios.get(url, {params: {
-        categoryId
+        categoryId, size, current 
     }}).then((res) => {
         return Promise.resolve(res.data)
     }).catch(function(response) {

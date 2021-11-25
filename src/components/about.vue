@@ -45,71 +45,22 @@
               <span>QQ：286835776</span>
               <span>Email: 286835776@qq.com</span>
               <span>座右铭：走得远比走得快更加重要</span>
-              <!-- <span class="qq-group">QQ群: 
-                <a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=8d443a712bbeb5aae1e78ba0954bce2544a7b07b19d8123c34b0e4d63b45d97c">
-                  <img style="height:20px;margin-left:10px;" border="0" src="//pub.idqqimg.com/wpa/images/group.png" alt="牛逼花吹牛交流群" title="牛逼花吹牛交流群">
-                </a>
-              </span> -->
             </div>
           </div>
           <!-- 博客搭建过程描述 -->
           <div style="margin-top:50px;" class="about-top-box">
             <span class="base-title">搭建过程</span>
           </div>
-          <div style="width:100%;" class="block app-column-center-layout">
+          <div style="width:95%;" class="block app-column-center-layout">
             <el-timeline>
-              <el-timeline-item timestamp="2019/12/28" placement="top">
+              <el-timeline-item v-for="(history, index) in historyList" 
+                placement="top"
+                
+                :key="index"
+                :timestamp="history.createTime">
                 <el-card>
-                  <h4>博客上线</h4>
-                  <p>参照友链三位大神的博客素材, 搭建了第一版的博客界面</p>
-                </el-card>
-              </el-timeline-item>
-              <el-timeline-item timestamp="2019/01/02" placement="top">
-                <el-card>
-                  <h4>新增滑动菜单</h4>
-                  <p>修改了最初版的顶部横向导航栏, 改为右侧动态滑动菜单栏</p>
-                </el-card>
-              </el-timeline-item>
-              <el-timeline-item timestamp="2020/01/04" placement="top">
-                <el-card>
-                  <h4>新增评论</h4>
-                  <p>文章详情界面新增评论展示和评论发表, 回复功能</p>
-                </el-card>
-              </el-timeline-item>
-              <el-timeline-item timestamp="2020/01/08" placement="top">
-                <el-card>
-                  <h4>移动端自适应</h4>
-                  <p>针对绝大部分时候网站会通过移动端进行访问, 做了移动端兼容处理</p>
-                </el-card>
-              </el-timeline-item>
-              <el-timeline-item timestamp="2020/01/12" placement="top">
-                <el-card>
-                  <h4>新增动效及整体样式完善</h4>
-                  <p>为了让博客整体看上去效果更好, 加入了部分动态效果</p>
-                </el-card>
-              </el-timeline-item>
-              <el-timeline-item timestamp="2020/01/16" placement="top">
-                <el-card>
-                  <h4>新增github登录</h4>
-                  <p>登录还是不能少的</p>
-                </el-card>
-              </el-timeline-item>
-              <el-timeline-item timestamp="2020/01/18" placement="top">
-                <el-card>
-                  <h4>新增评论分页</h4>
-                  <p>评论数据展示栏加入分页, 保证数据量过大时不会影响到性能</p>
-                </el-card>
-              </el-timeline-item>
-              <el-timeline-item timestamp="2020/01/20" placement="top">
-                <el-card>
-                  <h4>界面优化</h4>
-                  <p>增加动画特效及博客部分UI细节优化</p>
-                </el-card>
-              </el-timeline-item>
-              <el-timeline-item timestamp="2021/11/01" placement="top">
-                <el-card>
-                  <h4>博客迁移</h4>
-                  <p>云服务器到期, 进行环境及数据迁移, 顺便优化原项目, 实现Docker化项目部署和Minio资源服务器搭建上传</p>
+                  <h4>{{history.title}}</h4>
+                  <p>{{history.content}}</p>
                 </el-card>
               </el-timeline-item>
             </el-timeline>
@@ -142,6 +93,7 @@
 import { getListByRand } from '../api/blog/article.js'
 import { getCategoryList } from '../api/blog/category.js'
 import { getStatistical } from '../api/blog/statistical.js'
+import { getHistoryList } from '../api/blog/about.js'
 export default {
   name: '',
   props: {
@@ -153,6 +105,7 @@ export default {
       articleList: [],
       articleRandList: [],
       categoryList: [],
+      historyList: [],
       statistical: {}
     }
   },
@@ -162,6 +115,7 @@ export default {
     this.getListByRand()
     this.getCategoryList()
     this.getStatistical()
+    this.getHistoryList()
   },
   //页面离开时销毁
   beforeDestroy() {
@@ -174,6 +128,13 @@ export default {
       getStatistical().then((res) => {
         console.log(res)
         this.statistical = res.data
+      })
+    },
+
+    //获取历史记录
+    getHistoryList() {
+      getHistoryList().then((res) => {
+        this.historyList = res.data
       })
     },
 

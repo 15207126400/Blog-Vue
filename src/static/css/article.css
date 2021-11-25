@@ -10,6 +10,12 @@
     -webkit-font-smoothing: antialiased;
     -webkit-overflow-scrolling: touch;
   }
+  body::-webkit-scrollbar {
+    display: none;
+  }
+  div::-webkit-scrollbar {
+    display: none;
+  }
   .router-link-active {
     color:#000;
     font-size: 14px;
@@ -54,6 +60,7 @@
   .center{
     width:100%;
     margin: 40px auto;
+    padding-bottom: 100px;
     box-shadow: 8px 14px 38px rgba(39,44,49,0.06), 1px 3px 8px rgba(39,44,49,0.03);
     border-radius: 5px;
     color: #313232;
@@ -85,7 +92,7 @@
     cursor:pointer;
   }
   .article-list-left-img{
-    height:332px;
+    height:338px;
   }
   .article-list-left-img:hover{
     opacity: 0.8;
