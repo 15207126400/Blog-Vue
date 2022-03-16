@@ -1,7 +1,7 @@
 <template>
   <div>
     <!--中部-->
-    <div class="center app-column-center-layout shadow">
+    <div id="backgroudColer" class="app-column-center-layout shadow">
       <div class="center-box">
         <!--左侧部分(文章详情)-->
         <div class="content-box app-column-start-left">
@@ -48,10 +48,10 @@
             <el-dialog class="app-column-center-layout hidden-xs-only" 
               :visible.sync="centerDialogVisible" 
               width="26%" 
-              top="-5%" 
-              :before-close="handleClose">
+              top="-5%" >
               <div class="app-column-center-layout">
-                <img style="height:300px;" src="../assets/payCode.jpg"/>
+                <h3 style="color:#7A7D7E;">请打开支付宝扫一扫</h3>
+                <img style="height:300px;" src="../assets/payCode2.jpg"/>
               </div>
             </el-dialog>
             <!--分享-->
@@ -493,7 +493,8 @@ export default {
 
   /* 加载全部 */
   .bodyFont{
-    color: #333;
+    color: #3C3D3D;
+    font-size: 12px;
     text-align: left;
     word-break:break-all;
     word-wrap:break-word;

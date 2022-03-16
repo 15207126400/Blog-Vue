@@ -1,8 +1,8 @@
 <template>
   <div>
     <!--中部-->
-    <div class="center app-column-center-layout shadow">
-      <div style="height:80%;" class="center-box">
+    <div id="backgroudColer" class="center app-column-center-layout shadow">
+      <div class="center-box">
         <!--左侧部分(文章列表)-->
         <div style="display: flex;flex-direction: column;" class="content-box">
           <!--位置-->
@@ -12,7 +12,7 @@
           </el-breadcrumb>
           <!--文章列表-->
           <div class="infinite-list-wrapper">
-            <div style="overflow:auto;height:800px;" v-infinite-scroll="load" infinite-scroll-disabled="disabled">
+            <div style="height:1000px;overflow-y:scroll;" v-infinite-scroll="load" infinite-scroll-disabled="disabled">
               <div v-for="(article,aIndex) in articleList" :key="aIndex">
                 <div @click="routerTo(article.id)" class="article-list-left-box app-column-start-left shadow">
                   <img class="article-list-left-img" :src="article.img" />
@@ -31,8 +31,8 @@
                   </div>
                 </div>
               </div>
-              <div class="app-column-center-layout">
-                <p v-if="noMore" style="margin-top:10px;font-size:13px;color:#667481">没有更多了</p>
+              <div style="height: 50px;" class="app-column-center-layout">
+                <p v-if="noMore" style="font-size:13px;color:#667481">没有更多了</p>
               </div>
             </div>
           </div>
@@ -80,7 +80,7 @@ export default {
   computed: {
     noMore() {
       //当起始页数大于总页数时停止加载
-      return this.current >= this.pages - 1;
+      return this.current >= this.pages;
     },
     disabled() {
       return this.noMore;
@@ -116,7 +116,7 @@ export default {
       if(this.current > 1){
         loading = this.$loading({
           lock: true,
-          text: '加载文章列表中...',
+          // text: '加载文章列表中...',
           spinner: 'el-icon-loading',
           background: 'rgba(0, 0, 0, 0.7)'
         });
@@ -125,9 +125,12 @@ export default {
       getArticleList(form).then((res) => {
         this.articleList =  this.articleList.concat(res.data.records);
         this.pages = res.data.pages
-        setTimeout(() => {
+        if(res.code == 0){
           loading.close();
-        }, 1000);
+        }
+        // setTimeout(() => {
+        //   loading.close();
+        // }, 1000);
       })
     },
 

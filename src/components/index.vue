@@ -43,7 +43,7 @@
           <div class="carousel-box app-row-between-layout hidden-xs-only">
             <el-carousel :interval="4000" type="card" arrow="always" trigger="click" height="100px" @change="onChange">
               <el-carousel-item v-for="(item,index) in articleList" :key="index">
-                <img :src="item.img" alt="轮播图" class="carousel-img" />
+                <img :src="item.img" alt="轮播图" @click="routerToDetail" class="carousel-img" />
               </el-carousel-item>
             </el-carousel>
           </div>
@@ -52,7 +52,7 @@
           <!--文章标题及简介-->
           <div class="article-box hidden-xs-only">
             <div style="height:35px;">
-               <el-button type="info" size="small" @click="routerTo" v-if="seen" class="bottom-btn">
+               <el-button type="info" size="small" @click="routerTo" class="bottom-btn">
                  LET ' S GO
                  <i style="color:#eee;" class="el-icon-caret-right"></i>
                 </el-button>
@@ -81,7 +81,7 @@ export default {
       id:'',
       title: '',
       summary: '',
-      seen: false,
+      // seen: false,
       show: false
     }
   },
@@ -97,11 +97,19 @@ export default {
     }
   },
   methods: {
-    //跳转文章详情
+    //跳转文章列表
     routerTo(){
+      // var id = this.id
+      this.$router.push({
+         name: 'articleList'
+      });
+    },
+
+    //跳转文章详情
+    routerToDetail(){
       var id = this.id
       this.$router.push({
-         name: 'article', 
+         name: 'article',
          params: {
             id: id
           }
@@ -130,7 +138,7 @@ export default {
           this.id = id
           this.title = title
           this.summary = summary
-          this.seen = true
+          // this.seen = true
         }
       }
     },

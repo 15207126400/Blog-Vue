@@ -1,12 +1,12 @@
 <template>
   <div>
     <!--中部-->
-    <div class="center app-column-center-layout shadow">
+    <div id="backgroudColer" class="center app-column-center-layout shadow">
       <div class="center-box">
         <!--个人资料)-->
         <div class="about-box">
           <!--位置-->
-          <el-breadcrumb class="pos-box app-row-start-left" separator-class="el-icon-arrow-right">
+          <el-breadcrumb style="padding: 10px 0px 10px 20px;height: 30px;background: #fff;border-bottom: 1px solid #eee;" class="app-row-start-left" separator-class="el-icon-arrow-right">
             <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
             <el-breadcrumb-item>关于</el-breadcrumb-item>
           </el-breadcrumb>

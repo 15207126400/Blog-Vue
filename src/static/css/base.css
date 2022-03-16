@@ -8,6 +8,155 @@ body {
   background-color: #fff; /* -webkit-font-smoothing:antialiased; */
   -webkit-overflow-scrolling: touch;
 }
+/**背景色(渐变效果)**/
+#backgroudColer{
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  background-image: linear-gradient(125deg, #F44336, #E91E63, #9C27B0, #3F51B5, #2196F3);
+  background-size: 400%;
+  font-family: "montserrat";
+  animation: bganimation 15s infinite;
+}
+@keyframes bganimation {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+/* 菜单按钮特效 */
+#memnu-box{
+  width: 60px;
+  height: 30px;
+  box-sizing: border-box;
+  border: 1px solid #f0f2f7;
+  position: absolute;
+  left: 94%;
+  top: 3%;
+}
+#memnu-box:after, #memnu-box:before{
+  content: "";
+  width: 110%;
+  height: 110%;
+  box-sizing: border-box;
+  border: 2px solid;
+  position: absolute;
+  top: -5%;
+  left: -5%;
+  animation: boxBorder 6s linear infinite;
+}
+#memnu-box:before{
+  animation-delay: -3s;
+}
+#memnu-box .icon{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100px;
+  height: 100px;
+  margin-top: -50px;
+  margin-left: -50px;
+  animation: iconBox 3s linear infinite;
+}
+#memnu-box .icon:after,.box .icon:before{
+  content: "";
+  width: 40%;
+  height: 100%;
+  box-sizing: border-box;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  position: absolute;
+  top: 0;
+  left: 30px;
+  animation: iconBorder 3s linear infinite;
+}
+#memnu-box .icon:after{
+  transform: rotate(60deg);
+}
+#memnu-box .icon:before{
+  transform: rotate(-60deg);
+}
+#memnu-box .icon2:before{
+  transform: rotate(0deg);
+}
+#memnu-box .icon2:after{
+  height: 10px;
+  width: 10px;
+  background-color: #fff;
+  transform: translate(12px,-6px);
+  border: 3px solid #333;
+  box-sizing: content-box;
+  animation: iconYuan 3s linear infinite 0.6s;
+}
+/* 布局结束 */
+/* 动画开始 */
+@keyframes iconBox {
+  0%{
+      transform: rotate(0deg);
+  }
+  100%{
+      transform: rotate(360deg);
+  }
+}
+@keyframes iconBorder {
+  0%{
+      border-color: #F44336;
+  }
+  30%{
+      border-color: #E91E63;
+  }
+  60%{
+      border-color: #9C27B0;
+  }
+  100%{
+      border-color: #2196F3;
+  }
+}
+@keyframes iconYuan {
+  0%{
+    border-color: #F44336;
+  }
+  30%{
+      border-color: #E91E63;
+  }
+  60%{
+      border-color: #9C27B0;
+  }
+  100%{
+      border-color: #2196F3;
+  }
+}
+@keyframes boxBorder {
+  0%{
+      border-color: #fff;
+      clip: rect(0, 220px, 2px ,0);
+  }
+  25%{
+      border-color: yellow;
+      clip: rect(0, 2px, 220px ,0);
+  }
+  50%{
+      border-color: blue;
+      clip: rect(218px, 220px, 220px ,0);
+  }
+  75%{
+      border-color: green;
+      clip: rect(0, 220px, 220px ,218px);
+  }
+  100%{
+      border-color: aqua;
+      clip: rect(0, 220px, 2px ,0);
+  }
+}
+/* 个人信息头像 */
+
 ::-moz-selection {
   text-shadow: none;
   background: rgba(65, 131, 196, 0.4);
@@ -2056,6 +2205,70 @@ a {
   box-sizing: border-box;
 }
 @media (max-width: 768px) {
+  /* 菜单按钮特效 */
+  #memnu-box{
+    width: 60px;
+    height: 30px;
+    box-sizing: border-box;
+    border: 1px solid #f0f2f7;
+    position: absolute;
+    left: 80%;
+    top: 3%;
+  }
+  #memnu-box:after, #memnu-box:before{
+    content: "";
+    width: 110%;
+    height: 110%;
+    box-sizing: border-box;
+    border: 2px solid;
+    position: absolute;
+    top: -5%;
+    left: -5%;
+    animation: boxBorder 6s linear infinite;
+  }
+  #memnu-box:before{
+    animation-delay: -3s;
+  }
+  #memnu-box .icon{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100px;
+    height: 100px;
+    margin-top: -50px;
+    margin-left: -50px;
+    animation: iconBox 3s linear infinite;
+  }
+  #memnu-box .icon:after,.box .icon:before{
+    content: "";
+    width: 40%;
+    height: 100%;
+    box-sizing: border-box;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    position: absolute;
+    top: 0;
+    left: 30px;
+    animation: iconBorder 3s linear infinite;
+  }
+  #memnu-box .icon:after{
+    transform: rotate(60deg);
+  }
+  #memnu-box .icon:before{
+    transform: rotate(-60deg);
+  }
+  #memnu-box .icon2:before{
+    transform: rotate(0deg);
+  }
+  #memnu-box .icon2:after{
+    height: 10px;
+    width: 10px;
+    background-color: #fff;
+    transform: translate(12px,-6px);
+    border: 3px solid #333;
+    box-sizing: content-box;
+    animation: iconYuan 3s linear infinite 0.6s;
+  }
   .pagination {
     margin-top: 5px;
   }

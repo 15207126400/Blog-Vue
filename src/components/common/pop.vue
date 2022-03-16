@@ -2,9 +2,15 @@
 <template>
     <div id="menu">
       <transition name="el-fade-in-linear">
-        <div @click="drawer=true" class="menu-btn">
+        <!-- <div @click="drawer=true" class="menu-btn">
           <i style="color:#eee;" class="el-icon-s-unfold"></i>
           <span class="menu-font" style="color:#fff;font-size:12px;">MENU</span>
+        </div> -->
+        <!--特效-->
+        <div id="memnu-box" class="menu-btn" @click="drawer=true"> 
+          <span style="color:#fff;font-size:12px;font-weight:bold;">MENU</span> 
+          <div class="icon icon1"></div>    
+          <div class="icon icon2"></div>
         </div>
       </transition>
 
@@ -60,7 +66,7 @@
               <div v-else style="margin-top:150px;cursor:pointer" class="app-column-center-layout">
                 <el-button type="text" @click="dialogForLogin = true">
                   <li style="display:inline-block;width:40px;height:40px;border-radius:50%;background:#C0C4CC;line-height:40px;color:#fff;">空</li>
-                  <li style="font-size:12px;color:#C0C4CC;margin-top:10px;">未登录</li>
+                  <li style="font-size:12px;color:#99999A;margin-top:10px;">未登录</li>
                 </el-button>
               </div>
             </div>
@@ -68,25 +74,26 @@
       </el-drawer>
 
       <!--登录窗口-->
-      <el-dialog style="box-shadow:0 2px 12px 0 rgba(62, 63, 63, 0.3)" 
+      <el-dialog
         title="" 
         width="350px" 
+        :show-close=false
         :visible.sync="dialogForLogin"
         center>
         <div class="app-column-center-layout">
           <div class="app-column-center-layout">
-            <span class="base-title">博客登录</span>
+            <h1 id="login-title" style="font-family:Arial,Helvetica,sans-serif;vertical-align:middle;font-weight:blog;">Blog Login</h1>
           </div>
-          <div style="margin-top:30px;width:250px;" class="app-row-between-layout">
-            <el-input style="margin:10px" prefix-icon="el-icon-user-solid" placeholder="请输入邮箱" v-model="username" size="medium" clearable />
+          <div style="margin-top:30px;width:280px;" class="app-row-between-layout">
+            <el-input prefix-icon="el-icon-message" placeholder="e-maill" v-model="username" size="medium" clearable />
           </div>
-          <div style="width:250px;" class="app-row-between-layout">
-            <el-input style="margin:10px;" prefix-icon="el-icon-s-claim" placeholder="请输入密码" v-model="password" size="medium" show-password />
+          <div style="margin-top:15px;width:280px;" class="app-row-between-layout">
+            <el-input prefix-icon="el-icon-lock" placeholder="password" v-model="password" size="medium" show-password />
           </div>
           <div class="app-row-end-right">
               <el-button @click="dialogForUserinfo = true" style="padding-left:150px;" type="text" size="mini">快速注册</el-button>
           </div>
-          <el-button @click="loginForUsername(username, password)" style="margin:10px;width:150px;" type="primary" size="small">登录</el-button>
+          <el-button @click="loginForUsername(username, password)" style="margin:10px;width:230px;" type="primary" size="small">Login</el-button>
           </div>
           <el-divider></el-divider>
           <div @click="login()" style="margin-top:20px;cursor:pointer" class="app-column-center-layout">
@@ -99,7 +106,7 @@
       <el-dialog style="box-shadow:0 2px 12px 0 rgba(62, 63, 63, 0.3)" title="" width="350px" :visible.sync="dialogForUserinfo">
         <div class="app-column-center-layout">
           <!--头像-->
-          <div style="width:100%;height:150px;background:#58A9FF;" class="app-column-center-layout">
+          <div style="width:100%;height:150px;background:linear-gradient(-125deg, #57bdbf, #2f9de2);" class="app-column-center-layout">
             <div class="app-column-center-layout">
               <div class="app-column-center-layout">
                 <el-upload
@@ -134,12 +141,9 @@
             "
           >
             <div class="app-row-between-layout">
-              <div class="app-row-end-right">
-                <label style="color: #f56c6c; margin-right: 5px">*</label>
-                <label>邮箱：</label>
-              </div>
               <el-input v-if="userid"
-                style="width: 220px"
+                prefix-icon="el-icon-message"
+                style="width:280px"
                 v-model="username"
                 @blur="changeEmail(username)"
                 :disabled="true"
@@ -147,8 +151,9 @@
                 clearable
               />
               <el-input v-else
-                style="width: 220px"
-                placeholder="请输入邮箱"
+                prefix-icon="el-icon-message"
+                style="width:280px"
+                placeholder="e-mail"
                 v-model="username"
                 @blur="changeEmail(username)"
                 size="medium"
@@ -156,65 +161,59 @@
               />
             </div>
           </div>
-          <div style="height: 20px; width: 165px" class="app-row-start-layout">
+          <div style="height:20px;width:280px" class="app-row-start-layout">
             <span
               v-show="emailFlag == true"
-              style="color: #d23a32; font-size: 12px"
+              style="color:#d23a32;font-size:12px"
               >{{ emailMessage }}</span
             >
           </div>
           <!--密码-->
           <div style="display: -webkit-box; -webkit-box-align: center">
-            <div class="app-row-end-right">
-              <label style="color: #f56c6c; margin-right: 5px">*</label>
-              <label>密码：</label>
-            </div>
             <el-input
-              style="width: 220px"
+              prefix-icon="el-icon-lock"
+              style="width:280px"
               maxlength="20"
-              placeholder="请输入密码"
+              placeholder="password"
               v-model="password"
               @blur="changePassword(password)"
               size="medium"
               show-password
             />
           </div>
-          <div style="height: 20px; width: 165px" class="app-row-start-layout">
+          <div style="height:20px;width:280px" class="app-row-start-layout">
             <span
               v-show="passwordFlag == true"
-              style="color: #d23a32; font-size: 12px"
+              style="color:#d23a32;font-size:12px"
               >{{ passwordMessage }}</span
             >
           </div>
           <!--昵称-->
           <div style="display: -webkit-box; -webkit-box-align: center">
-            <div class="app-row-end-right">
-              <label style="color: #f56c6c; margin-right: 5px">*</label>
-              <label>昵称：</label>
-            </div>
             <el-input
-              style="width: 220px"
+              prefix-icon="el-icon-link"
+              style="width:280px"
               maxlength="20"
-              placeholder="请输入昵称"
+              placeholder="nickname"
               v-model="nickname"
               @blur="changeNickname(nickname)"
               size="medium"
               clearable
             />
           </div>
-          <div style="height: 20px; width: 165px" class="app-row-start-layout">
+          <div style="height:20px;width:280px" class="app-row-start-layout">
             <span
               v-show="nicknameFlag == true"
-              style="color: #d23a32; font-size: 12px"
+              style="color:#d23a32;font-size:12px"
               >{{ nicknameMessage }}</span
             >
           </div>
           <el-button
             @click.native="registerOrUpdateAccount(username, password, nickname)"
-            style="margin: 35px 10px 10px 10px; width: 200px; position: relative"
+            style="margin:35px 10px 10px 10px; width:250px;position:relative"
             type="primary"
-            size="small"
-            >提交</el-button
+            size="medium"
+            >Submit</el-button
           >
         </div>
       </el-dialog>
@@ -451,12 +450,13 @@
               localStorage.setItem("userinfo", JSON.stringify(userinfo));
               that.$router.push(path);
               clearTimeout(this.timer); //清除延迟执行
-              this.timer = setTimeout(() => {
+              that.timer = setTimeout(() => {
                 //设置延迟执行
+                that.dialogForUserinfo = false
                 location.reload();
               }, 500);
             } else {
-              this.$message.error({
+              that.$message.error({
                 center: true,
                 message: res.msg,
               });
@@ -487,10 +487,16 @@
     text-decoration none
   a hover
     text-decoration none
+  #login-title
+    background #EEE 
+    text-shadow 5px -5px black, 4px -4px white
+    font-weight bold
+    -webkit-text-fill-color transparent
+    -webkit-background-clip text
   .menu-btn
     position fixed
     right 0px
-    top 20px
+    top 25px
     z-index 30
     padding 6px 10px 6px 10px
     border 1px solid rgba(255,255,255,0.6)
@@ -524,7 +530,7 @@
   .menu-btn
     position fixed
     right 0px
-    top 20px
+    top 25px
     z-index 30
     padding 6px 10px 6px 10px
     border 1px solid rgba(255,255,255,0.6)

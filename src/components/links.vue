@@ -1,7 +1,7 @@
 <template>
   <div>
     <!--中部-->
-    <div class="center app-column-center-layout shadow">
+    <div id="backgroudColer" class="center app-column-center-layout shadow">
       <div style="margin-bottom:5%;" class="center-box">
         <!--友情链接--> 
         <div class="about-box">
