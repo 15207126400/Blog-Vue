@@ -40,13 +40,13 @@
           </header>
 
           <!--轮播图-->
-          <div class="carousel-box app-row-between-layout hidden-xs-only">
+          <!-- <div class="carousel-box app-row-between-layout hidden-xs-only">
             <el-carousel :interval="4000" type="card" arrow="always" trigger="click" height="100px" @change="onChange">
               <el-carousel-item v-for="(item,index) in articleList" :key="index">
                 <img :src="item.img" alt="轮播图" @click="routerToDetail" class="carousel-img" />
               </el-carousel-item>
             </el-carousel>
-          </div>
+          </div> -->
           
           
           <!--文章标题及简介-->
@@ -87,8 +87,8 @@ export default {
   },
   //页面加载时
   created() {
-    this.blogIndex()
-    this.getTimer(this)
+    // this.blogIndex()
+    // this.getTimer(this)
   },
   //页面离开时销毁
   beforeDestroy() {
@@ -243,15 +243,27 @@ export default {
     margin-bottom 100px
     line-height 35px
   .article-title
-    color #000
-    opacity 0.9
+    color #FFF
+    opacity 0.3
     font-weight 900
     font-size 30px
-    text-shadow 0 3px 6px rgba(0,0,0,0.3)
+    text-shadow 0 3px 6px rgba(0,0,0,0.1)
   .bottom-btn
-    width 100px
+    width 150px
+    height 40px
+    font-size 13px
     background #000
-    opacity 0.9
+    opacity 0.7
+    transition all 0.5s ease
+  .bottom-btn:hover
+    width 180px
+    height 40px
+    font-size 13px
+    color #FFFFFF
+    background-color #4cc9f0
+    -webkit-box-shadow 10px 10px 99px 6px rgba(76,201,240,1)
+    -moz-box-shadow 10px 10px 99px 6px rgba(76,201,240,1)
+    box-shadow 10px 10px 99px 6px rgba(76,201,240,1)
   .header
     display none
   #headerDown

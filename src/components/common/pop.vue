@@ -346,7 +346,7 @@
               done();
             }
           }
-        }).then(action => {
+        }).then(action => {// eslint-disable-line no-unused-vars
           this.$message({
             type: 'success',
             center: true,
@@ -521,8 +521,13 @@
     text-decoration none
     width 100%
     padding 20px 0px 20px 0px
+    transition all .3s ease
   .menu-router-box:hover 
-    background #eee
+    padding 25px 0px 25px 0px
+    background-color #4cc9f0
+    -webkit-box-shadow 10px 10px 99px 6px rgba(76,201,240,1)
+    -moz-box-shadow 10px 10px 99px 6px rgba(76,201,240,1)
+    box-shadow 10px 10px 99px 6px rgba(76,201,240,1)
     
 @media screen and (max-width: 750px)
   .menu-avg-box

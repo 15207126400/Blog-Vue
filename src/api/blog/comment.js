@@ -48,3 +48,12 @@ export function getCommentListPage(form) {
         console.log(response2)
     })
 }
+export function getCommentListByNew() {
+    const url = '/api/blog/getCommentListByNew'
+
+    return axios.get(url).then((res2) => {
+        return Promise.resolve(res2.data)
+    }).catch(function(response2) {
+        console.log(response2)
+    })
+}

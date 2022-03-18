@@ -18,13 +18,6 @@ const articleList = (resolve) => {
   })
 }
 
-//标签-文章列表页
-const tags = (resolve) => {
-  import('../components/tags').then((module) => {
-    resolve(module)
-  })
-}
-
 //关于我
 const about = (resolve) => {
   import('../components/about').then((module) => {
@@ -63,12 +56,6 @@ export default new Router({
       name: 'articleList',
       path: '/articleList',
       component: articleList,
-      props: true
-    },
-    {
-      name: 'tags',
-      path: '/tags/:id',
-      component: tags,
       props: true
     },
     {

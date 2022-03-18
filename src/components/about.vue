@@ -5,11 +5,6 @@
       <div class="center-box">
         <!--个人资料)-->
         <div class="about-box">
-          <!--位置-->
-          <el-breadcrumb style="padding: 10px 0px 10px 20px;height: 30px;background: #fff;border-bottom: 1px solid #eee;" class="app-row-start-left" separator-class="el-icon-arrow-right">
-            <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-            <el-breadcrumb-item>关于</el-breadcrumb-item>
-          </el-breadcrumb>
           <div class="about-top-box">
             <span class="base-title">个人资料</span>
           </div>
@@ -33,7 +28,7 @@
                 </div>
               </div>
               <div class="a-box app-row-between-layout">
-                <a class="a-class" href="https://github.com/15207126400?tab=repositories" target="_blank">Github</a>
+                <a class="a-class" href="https://github.com/15207126400" target="_blank">Github</a>
                 <a class="a-class hidden-xs-only" href="tencent://message/?uin=286835776&Site=qq&Menu=yes">Call Me</a>
               </div>
             </div>
@@ -66,32 +61,12 @@
             </el-timeline>
           </div>
         </div>
-        <!--右侧部分-->
-        <div class="right-box hidden-xs-only">
-          <div class="right-top-box shadow">
-            <span class="base-title">推荐文章</span>
-            <div class="right-top-box-item" v-for="(item,index) in articleRandList" :key="index">
-              <img @click="routerTo(item.id)" class="article-list-right-img" :src="item.img" /> 
-              <!-- <div class="right-top-box-item-title">
-                <h5>{{item.title}}</h5>
-              </div> -->
-            </div>
-          </div>
-          <div class="right-bottom-box shadow">
-            <span class="base-title">热门标签</span>
-            <div class="category-box">
-              <span @click="routerToTags(category.id)" class="category-name" v-for="(category,cIndex) in categoryList" :key="cIndex">{{category.name}}</span>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { getListByRand } from '../api/blog/article.js'
-import { getCategoryList } from '../api/blog/category.js'
 import { getStatistical } from '../api/blog/statistical.js'
 import { getHistoryList } from '../api/blog/about.js'
 export default {
@@ -102,18 +77,12 @@ export default {
   //变量定义
   data () {
     return {
-      articleList: [],
-      articleRandList: [],
-      categoryList: [],
       historyList: [],
       statistical: {}
     }
   },
   //页面加载时
   created() {
-    console.log('about初始化')
-    this.getListByRand()
-    this.getCategoryList()
     this.getStatistical()
     this.getHistoryList()
   },
@@ -136,40 +105,6 @@ export default {
       getHistoryList().then((res) => {
         this.historyList = res.data
       })
-    },
-
-    //获取随机文章
-    getListByRand() {
-      getListByRand().then((res) => {
-        this.articleRandList = res.data
-      })
-    },
-
-    //获取分类列表
-    getCategoryList(){
-      getCategoryList().then((res) => {
-        this.categoryList = res.data
-      })
-    },
-
-    //跳转文章详情
-    routerTo(id){
-      this.$router.push({
-         name: 'article', 
-         params: {
-            id: id
-          }
-      });
-    },
-
-    //通过标签跳转文章列表
-    routerToTags(id){
-      this.$router.push({
-         name: 'tags', 
-         params: {
-            id: id
-          }
-      });
     }
   }
 }

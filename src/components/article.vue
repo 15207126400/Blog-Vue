@@ -4,7 +4,7 @@
     <div id="backgroudColer" class="app-column-center-layout shadow">
       <div class="center-box">
         <!--左侧部分(文章详情)-->
-        <div class="content-box app-column-start-left">
+        <div style="margin-top:30px;" class="app-column-start-left">
           <!--位置-->
           <el-breadcrumb class="pos-box app-row-start-left" separator-class="el-icon-arrow-right">
             <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
@@ -149,30 +149,14 @@
             </form>
           </div>
         </div>
-        <!--右侧部分-->
-        <div class="right-box hidden-xs-only">
-          <div class="right-top-box shadow">
-            <span class="base-title">推荐文章</span>
-            <div class="right-top-box-item" v-for="(item,index) in articleRandList" :key="index">
-              <img @click="routerTo(item.id)" class="article-list-right-img" :src="item.img" /> 
-            </div>
-          </div>
-          <div class="right-bottom-box shadow">
-            <span class="base-title">热门标签</span>
-            <div class="category-box">
-              <span @click="routerToTags(category.id)" class="category-name" v-for="(category,cIndex) in categoryList" :key="cIndex">{{category.name}}</span>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { getArticle,getListByRand } from '../api/blog/article.js'
-import { getCategoryList } from '../api/blog/category.js'
-import { postComment,replyComment,getCommentList,getCommentListPage } from '../api/blog/comment.js'
+import { getArticle } from '../api/blog/article.js'
+import { postComment,getCommentList } from '../api/blog/comment.js'
 export default {
   name: '',
   props: {
@@ -198,8 +182,6 @@ export default {
       parentId:'',
       show: false,
       article: {},
-      articleRandList: [],
-      categoryList: [],
       commentList:[],
       page:{},
       i: -1,
@@ -239,8 +221,6 @@ export default {
       size: this.size
     }
     this.getArticle(id)
-    this.getListByRand()
-    this.getCategoryList()
     this.getCommentList(form)
   },
   //页面离开时销毁
@@ -270,34 +250,10 @@ export default {
       })
     },
 
-    //获取随机文章
-    getListByRand() {
-      getListByRand().then((res) => {
-        this.articleRandList = res.data
-      })
-    },
-
-    //获取分类列表
-    getCategoryList(){
-      getCategoryList().then((res) => {
-        this.categoryList = res.data
-      })
-    },
-
     //跳转文章详情
     routerTo(id){
       this.$router.push({
          name: 'article', 
-         params: {
-            id: id
-          }
-      });
-    },
-
-    //通过标签跳转文章列表
-    routerToTags(id){
-      this.$router.push({
-         name: 'tags', 
          params: {
             id: id
           }
@@ -483,14 +439,6 @@ export default {
 
 <!-- 样式 -->
 <style scoped>
-  /* ul{
-    list-style:none;
-  }
-  ul li {
-    float: left;
-    margin:0 10px;
-  } */
-
   /* 加载全部 */
   .bodyFont{
     color: #3C3D3D;
