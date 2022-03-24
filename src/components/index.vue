@@ -87,7 +87,7 @@ export default {
   },
   //页面加载时
   created() {
-    // this.blogIndex()
+    this.blogIndex()
     // this.getTimer(this)
   },
   //页面离开时销毁
