@@ -65,6 +65,7 @@
     color: #313232;
   }
   .center-box{
+    width: 60%;
     margin-left: 15%;
     margin-right: 15%;
     display: flex;
@@ -90,11 +91,11 @@
     margin:00px 0px 10px 0px;
     padding:20px;
     cursor:pointer;
-    height: 150px;
-    transition: all .5s ease;
+    height: 143px;
+    transition: all .3s ease;
   }
   .article-list-left-box:hover{
-    padding:30px;
+    padding:25px 20px 25px 20px;
     color: #FFFFFF;
     background-color: #4cc9f0;
     -webkit-box-shadow: 10px 10px 99px 6px rgba(76,201,240,1);
@@ -300,7 +301,6 @@
   }
   .category-box{
     margin: 10px 0px 0px 0px;
-    padding-bottom: 10px;
     border: 0;
     outline: 0;
     line-height: 1.4;

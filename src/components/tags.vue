@@ -56,7 +56,7 @@
 </template>
 
 <script>
-import { getArticleList } from '../api/blog/article.js'
+import { getArticleListByCategory } from '../api/blog/article.js'
 import { getCategoryList } from '../api/blog/category.js'
 import { getCommentListByNew } from '../api/blog/comment.js'
 export default {
@@ -64,6 +64,8 @@ export default {
   props: {
     msg: String
   },
+  //刷新页面
+  inject:['reload'],
   //变量定义
   data () {
     return {
@@ -72,6 +74,13 @@ export default {
       articleList: [],
       commentList: [],
       categoryList: []
+    }
+  },
+
+  //监听路由是否变化并进行跳转
+  watch: {
+    '$route' (to) { 
+      this.$router.go(to)
     }
   },
   
@@ -87,8 +96,14 @@ export default {
 
   //页面加载时
   created() {
-    // console.log('articleList初始化')
-    this.getArticleList()
+    var categoryId = this.$route.params.id
+     console.log('来了====' + categoryId)
+    var form = {
+      categoryId: categoryId,
+      current: 0,
+      size: 10
+    }
+    this.getArticleListByCategory(form)
     this.getCommentListByNew()
     this.getCategoryList()
   },
@@ -104,12 +119,7 @@ export default {
     },
 
     //获取文章信息
-    getArticleList() {
-      let form = {
-        current: this.current,
-        size: 10 //每页查询条数
-      }
-
+    getArticleListByCategory(form) {
       var loading;
       if(this.current > 1){
         loading = this.$loading({
@@ -120,7 +130,7 @@ export default {
         });
       }
 
-      getArticleList(form).then((res) => {
+      getArticleListByCategory(form).then((res) => {
         this.articleList =  this.articleList.concat(res.data.records);
         this.pages = res.data.pages
         if(res.code == 0){

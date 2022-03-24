@@ -2,8 +2,8 @@
  * 配置参考:
  * https://cli.vuejs.org/zh/config/
  */
-const url = 'http://1.117.251.254:8888'
-// const url = 'http://127.0.0.1:8888'
+// const url = 'http://1.117.251.254:8888'
+const url = 'http://127.0.0.1:8888'
 const githubURL = 'https://www.github.com'
 module.exports = {
   lintOnSave: true,
